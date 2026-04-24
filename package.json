@@ -1,0 +1,14 @@
+{
+  "name": "learnify",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": ["web", "api"],
+  "scripts": {
+    "dev:web": "npm --workspace web run dev",
+    "dev:api": "npm --workspace api run dev",
+    "seed": "npm --workspace api run seed",
+    "prisma:generate": "npm --workspace api run prisma:generate",
+    "prisma:migrate": "npm --workspace api run prisma:migrate",
+    "build": "npm --workspace api run build && npm --workspace web run build"
+  }
+}

@@ -1,0 +1,56 @@
+Learnify deployment guide (Frontend: Vercel, Backend: Render)
+
+1) Deploy backend (api) on Render
+
+Recommended (monorepo-safe) setup:
+- Create a new Web Service on Render from this GitHub repo.
+- Runtime: Node
+- Root Directory: leave empty (repo root)
+- Build Command:
+  npm install && npm --workspace api run prisma:generate && npm --workspace api run prisma:migrate && npm --workspace api run build
+- Start Command:
+  npm --workspace api run start
+
+Set these Render environment variables:
+- DATABASE_URL=postgresql://... (Render Postgres URL)
+- PORT=10000 (or leave unset; Render injects PORT automatically)
+- NODE_ENV=production
+- CORS_ORIGIN=https://<your-vercel-domain>
+- JWT_ACCESS_SECRET=<strong-random-secret>
+- JWT_REFRESH_SECRET=<strong-random-secret>
+- JWT_ACCESS_EXPIRES=15m
+- JWT_REFRESH_EXPIRES=7d
+- AWS_REGION=us-east-1
+- AWS_ACCESS_KEY_ID=<optional>
+- AWS_SECRET_ACCESS_KEY=<optional>
+- AWS_S3_BUCKET=<optional>
+- S3_ENABLED=false (or true if S3 is configured)
+- SEED_ADMIN_EMAIL=admin@learnify.dev
+- SEED_ADMIN_PASSWORD=admin123
+
+Seeding (no Render Shell access):
+- On your local machine, set the Render DATABASE_URL env var temporarily and run seed:
+  $env:DATABASE_URL="<your-render-postgres-url>"; npm --workspace api run seed
+  (This seeds the remote DB from your local terminal.)
+
+2) Deploy frontend (web) on Vercel
+
+- Import the same GitHub repo in Vercel.
+- Framework Preset: Next.js
+- Root Directory: web
+- Build Command: next build (or leave default)
+- Output Directory: .next (default)
+
+Set Vercel environment variable:
+- NEXT_PUBLIC_API_URL=https://<your-render-service>.onrender.com
+
+Redeploy after setting env vars.
+
+3) Final checks
+
+- Open frontend URL on Vercel.
+- Try login with:
+  admin@learnify.dev / admin123
+- If auth fails due to CORS, confirm Render CORS_ORIGIN exactly matches your Vercel domain (including https).
+- Test API health:
+  https://<your-render-service>.onrender.com/api/health

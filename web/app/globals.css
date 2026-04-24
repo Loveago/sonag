@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 0 0% 100%;
+    --bg-subtle: 240 20% 98%;
+    --bg-card: 0 0% 100%;
+    --fg: 224 28% 10%;
+    --fg-muted: 220 10% 45%;
+    --border: 220 14% 90%;
+    --primary: 263 85% 58%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 198 93% 60%;
+    --accent-foreground: 0 0% 100%;
+    --success: 152 64% 45%;
+    --warning: 38 92% 50%;
+    --danger: 0 84% 60%;
+  }
+  .dark {
+    --bg: 230 28% 5%;
+    --bg-subtle: 230 24% 8%;
+    --bg-card: 230 26% 10%;
+    --fg: 210 20% 98%;
+    --fg-muted: 215 15% 65%;
+    --border: 230 20% 18%;
+    --primary: 263 85% 65%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 198 93% 60%;
+    --accent-foreground: 0 0% 100%;
+  }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    @apply bg-bg text-fg;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+  }
+  ::selection { background: hsl(var(--primary) / 0.35); }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/40
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-primary-foreground shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.6)]
+           hover:brightness-110 active:scale-[0.98];
+  }
+  .btn-ghost { @apply btn hover:bg-bg-subtle text-fg; }
+  .btn-outline { @apply btn border border-border hover:bg-bg-subtle; }
+  .card {
+    @apply rounded-2xl border border-border bg-bg-card shadow-soft;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-border bg-bg-subtle
+           px-2.5 py-0.5 text-xs text-fg-muted;
+  }
+  .input {
+    @apply w-full rounded-xl border border-border bg-bg-subtle px-3 py-2 text-sm
+           placeholder:text-fg-muted/70 focus:outline-none focus:ring-2 focus:ring-primary/30
+           focus:border-primary/40 transition;
+  }
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-bg-subtle;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer
+           bg-gradient-to-r from-transparent via-white/5 to-transparent;
+  }
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
+  .grid-bg { background-image: var(--tw-bg-grid, linear-gradient(to right, hsl(var(--border) / 0.08) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.08) 1px, transparent 1px)); background-size: 40px 40px; }
+}
+
+/* Custom range slider for video */
+.range-video {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: hsl(var(--border));
+  border-radius: 9999px;
+  cursor: pointer;
+}
+.range-video::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px; border-radius: 9999px;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.2);
+  cursor: pointer;
+}
+.range-video::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 9999px;
+  background: hsl(var(--primary)); border: none;
+}
+
+/* Scrollbar */
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 9999px; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: hsl(var(--fg-muted)); }

@@ -1,0 +1,12 @@
+{
+  "name": "Learnify",
+  "short_name": "Learnify",
+  "description": "Premium online course platform",
+  "theme_color": "#0a0a14",
+  "background_color": "#0a0a14",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -1,0 +1,158 @@
+You are a senior full-stack engineer and product designer. Build a production-ready, feature-rich online course platform.
+
+Tech Stack:
+- Frontend: Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion (for animations)
+- Backend: Node.js + Express.js (REST API, scalable architecture)
+- Database: PostgreSQL (use Prisma ORM)
+- Storage: AWS S3 (for video uploads and assets)
+- Auth: JWT + Refresh Tokens (secure, scalable)
+- Deployment-ready structure (Docker support optional)
+
+Core Concept:
+This is a premium online learning platform where ONLY ADMIN uploads and manages courses (no instructors or sellers for now). Courses are video-based, stored in S3.
+
+-----------------------------------
+🔥 FRONTEND (Next.js)
+-----------------------------------
+
+Build an ultra-modern UI with:
+- Smooth animations (Framer Motion)
+- Clean, minimal but premium design (inspired by Stripe / Linear / Apple)
+- Dark/light mode toggle
+- Responsive design (mobile-first)
+- Skeleton loaders + transitions for better UX
+
+Pages:
+- Landing Page (hero, features, testimonials, CTA)
+- Courses Listing Page (grid with filters, search)
+- Course Details Page (preview, curriculum, pricing/free)
+- Video Player Page (custom player UI)
+- Dashboard (user enrolled courses, progress tracking)
+- Auth pages (login/register)
+- Profile page
+
+UI Features:
+- Animated hover effects
+- Micro-interactions everywhere
+- Sticky navigation
+- Progress bars for courses
+- Course cards with preview animations
+- Lazy loading videos
+- Optimistic UI updates
+
+-----------------------------------
+🔥 BACKEND (Express API)
+-----------------------------------
+
+Architecture:
+- MVC or modular clean architecture
+- Middleware for auth, logging, error handling
+- Secure API (rate limiting, validation with Zod/Joi)
+
+Modules:
+1. Auth
+   - Register/Login
+   - JWT + refresh token system
+   - Password hashing (bcrypt)
+
+2. Users
+   - Profile management
+   - Enrolled courses
+   - Progress tracking
+
+3. Courses
+   - Create, update, delete courses
+   - Course sections and lessons
+   - Video metadata handling
+   - Course thumbnails
+
+4. Video Handling
+   - Upload videos to AWS S3
+   - Generate signed URLs for secure streaming
+   - Chunk upload support (optional advanced)
+
+5. Progress Tracking
+   - Track watched videos
+   - Completion percentage
+
+-----------------------------------
+🔥 ADMIN PANEL (VERY IMPORTANT)
+-----------------------------------
+
+Build a powerful admin dashboard:
+
+Admin Features:
+- Dashboard overview (stats: users, courses, revenue placeholder)
+- Full course management:
+  - Create/edit/delete courses
+  - Add sections and lessons
+  - Upload videos directly to S3
+  - Drag-and-drop course structure
+- Manage users
+- View analytics (course engagement, completion rates)
+- Upload thumbnails and assets
+- Rich text editor for course descriptions
+- Toggle course visibility (draft/published)
+
+UI:
+- Sidebar layout (modern SaaS style)
+- Charts (use Recharts or similar)
+- Smooth transitions and animations
+- Table views with sorting/filtering
+
+-----------------------------------
+🔥 VIDEO SYSTEM
+-----------------------------------
+
+- Custom video player UI
+- Resume playback
+- Track progress automatically
+- Secure streaming via signed URLs
+- Prevent direct download (basic protection)
+
+-----------------------------------
+🔥 ADVANCED FEATURES
+-----------------------------------
+
+- Bookmark lessons
+- Notes per lesson
+- Course progress tracking
+- Recently watched section
+- Search with debounce
+- Filter courses (category, difficulty)
+- Toast notifications
+- Global loading states
+
+-----------------------------------
+🔥 PERFORMANCE & QUALITY
+-----------------------------------
+
+- Code splitting
+- Lazy loading
+- API caching where needed
+- Error boundaries
+- Clean folder structure
+- Reusable components
+- Type safety everywhere
+
+-----------------------------------
+🔥 BONUS (if possible)
+-----------------------------------
+
+- PWA support
+- Offline access (basic caching)
+- Email notifications (optional)
+- Stripe integration placeholder (for future monetization)
+
+-----------------------------------
+OUTPUT REQUIREMENTS
+-----------------------------------
+
+- Generate full project structure
+- Include key files (not just placeholders)
+- Write clean, maintainable, production-level code
+- Include setup instructions
+- Use environment variables properly
+- Include README with architecture explanation
+
+Make this feel like a high-end SaaS product with exceptional UX.

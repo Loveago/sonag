@@ -1,0 +1,145 @@
+// To use SQLite for quick local dev, change provider to "sqlite" and DATABASE_URL="file:./dev.db"
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  password       String
+  name           String
+  avatar         String?
+  role           Role      @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  enrollments    Enrollment[]
+  progresses     Progress[]
+  notes          Note[]
+  bookmarks      Bookmark[]
+  refreshTokens  RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revoked   Boolean  @default(false)
+}
+
+model Course {
+  id           String       @id @default(cuid())
+  title        String
+  slug         String       @unique
+  description  String
+  summary      String
+  thumbnail    String
+  category     String
+  difficulty   Difficulty   @default(BEGINNER)
+  price        Float        @default(0)
+  isFree       Boolean      @default(false)
+  status       CourseStatus @default(DRAFT)
+  rating       Float        @default(0)
+  ratingCount  Int          @default(0)
+  studentCount Int          @default(0)
+  duration     Int          @default(0) // seconds
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  sections     Section[]
+  enrollments  Enrollment[]
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  title     String
+  order     Int
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
+  createdAt DateTime @default(now())
+}
+
+model Lesson {
+  id         String     @id @default(cuid())
+  title      String
+  order      Int
+  duration   Int        @default(0)
+  videoKey   String?    // S3 key
+  videoUrl   String?    // preview/public URL
+  content    String?    // rich text
+  sectionId  String
+  section    Section    @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  progresses Progress[]
+  notes      Note[]
+  bookmarks  Bookmark[]
+  createdAt  DateTime   @default(now())
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  userId     String
+  courseId   String
+  progress   Float    @default(0) // 0..100
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  @@unique([userId, courseId])
+}
+
+model Progress {
+  id         String   @id @default(cuid())
+  userId     String
+  lessonId   String
+  position   Int      @default(0) // seconds
+  completed  Boolean  @default(false)
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson     Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  @@unique([userId, lessonId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  content   String
+  timestamp Int      @default(0)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  @@unique([userId, lessonId])
+}
