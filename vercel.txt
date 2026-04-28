@@ -5,11 +5,13 @@ Learnify deployment guide (Frontend: Vercel, Backend: Render)
 Recommended (monorepo-safe) setup:
 - Create a new Web Service on Render from this GitHub repo.
 - Runtime: Node
-- Root Directory: leave empty (repo root)
+- Root Directory: api
 - Build Command:
-  npm install && npm --workspace api run prisma:generate && npm --workspace api run prisma:migrate && npm --workspace api run build
+  npm install && npm run prisma:generate && npm run prisma:migrate && npm run build
 - Start Command:
-  npm --workspace api run start
+  npm run start
+
+Note: If your Root Directory is set to api, do not use npm workspaces flags (--workspace/-w). Workspaces are defined in the repo root package.json, which is not visible when running inside api/.
 
 Set these Render environment variables:
 - DATABASE_URL=postgresql://... (Render Postgres URL)
