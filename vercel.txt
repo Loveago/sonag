@@ -7,7 +7,7 @@ Recommended (monorepo-safe) setup:
 - Runtime: Node
 - Root Directory: api
 - Build Command:
-  npm install && npm run prisma:generate && npm run prisma:migrate && npm run build
+  npm install --include=dev && npm run prisma:generate && npm run prisma:migrate && npm run build
 - Start Command:
   npm run start
 
